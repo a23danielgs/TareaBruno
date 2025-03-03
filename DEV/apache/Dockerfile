@@ -27,8 +27,9 @@ php8.1-zip
 RUN a2enmod rewrite headers ssl
 
 # Configurar Apache para PrestaShop
-COPY prestashop.conf /etc/apache2/sites-available/prestashop.conf
-RUN a2dissite 000-default.conf && a2ensite prestashop.conf
+
+# COPY prestashop.conf /etc/apache2/sites-available/prestashop.conf
+# RUN a2dissite 000-default.conf && a2ensite prestashop.conf
 
 # Definir o directorio de traballo
 WORKDIR /var/www/html
