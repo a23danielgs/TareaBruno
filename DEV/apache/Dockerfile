@@ -1,31 +1,27 @@
 FROM debian:12
 
-# Actualizar paquetes e instalar utilidades básicas
-RUN apt update && apt -y install wget curl sudo lsb-release apt-transport-https ca-certificates \
-    && apt clean \
-    && rm -rf /var/lib/apt/lists/*
+##DOCKER NO ENCONTRABA PHP8.1 QUE ERA LA VERSION NECESARIA PARA PRESTASHOP:
+RUN apt update && apt install -y lsb-release apt-transport-https ca-certificates wget gnupg
+RUN wget -q https://packages.sury.org/php/apt.gpg -O- | apt-key add -
+RUN echo "deb https://packages.sury.org/php/ $(lsb_release -sc) main" > /etc/apt/sources.list.d/php.list
+RUN apt update && apt install -y php8.1
 
-# Instalar Apache e PHP 8.1 con todos os módulos necesarios
-RUN apt update && apt install -y apache2 php8.1 php8.1-mysql \
-    php8.1-xml \
-    php8.1-gd \
-    php8.1-curl \
-    php8.1-mbstring \
-    php8.1-zip \
-    php8.1-intl \
-    php8.1-bcmath \
-    php8.1-opcache \
-    php8.1-soap \
-    php8.1-pdo \
-    php8.1-pdo-mysql \
-    php8.1-json \
-    php8.1-simplexml \
-    git \
-    unzip \
-    libnss3-tools \
-    xdg-utils \
-    && apt clean \
-    && rm -rf /var/lib/apt/lists/*
+
+RUN apt install -y apache2 
+
+
+##INSTALAR TODAS LAS EXTENSIONES NECESARIAS:
+RUN apt install -y php8.1-curl \
+php8.1-dom \
+php8.1-fileinfo \
+php8.1-gd \
+php8.1-iconv \
+php8.1-intl \
+php8.1-mbstring \
+php8.1-pdo \
+php8.1-mysql \
+php8.1-simplexml \
+php8.1-zip
 
 # Habilitar módulos de Apache necesarios
 RUN a2enmod rewrite headers ssl
@@ -41,4 +37,4 @@ WORKDIR /var/www/html
 EXPOSE 80 443
 
 # Iniciar Apache
-CMD ["apachectl", "-D", "FOREGROUND"]
+ENTRYPOINT ["tail", "-f", "/dev/null"]

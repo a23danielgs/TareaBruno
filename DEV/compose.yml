@@ -19,7 +19,7 @@ services:
   basededatos:
     image: mariadb
     env_file:
-      - .env
+      - mariadb
     volumes:
       - datos:/var/lib/mysql
     networks:
@@ -34,6 +34,10 @@ services:
       - 8080:80
     environment:
       - PMA_HOST=basededatos
+
+secrets:
+  mariadb:
+    - .env
 
 networks:
   rede_test:
