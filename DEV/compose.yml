@@ -18,10 +18,12 @@ services:
 
   basededatos:
     image: mariadb
-    env_file:
-      - mariadb
     volumes:
       - datos:/var/lib/mysql
+    env_file:
+      - mariadb.env
+    secrets:
+      - mariadb
     networks:
       - rede_test
 
@@ -37,7 +39,7 @@ services:
 
 secrets:
   mariadb:
-    - .env
+    file: .mariadb.txt
 
 networks:
   rede_test:
