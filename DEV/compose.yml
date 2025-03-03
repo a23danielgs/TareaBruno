@@ -12,8 +12,8 @@ services:
           - a23danielgs.ddnsfree.com
           - www.a23danielgs.ddnsfree.com
     volumes:
-      - ./app:/app
-      - ./apache/drupal.conf:/etc/apache2/sites-enabled/drupal.conf
+      - ./app/:/app
+      - ./configs/:/etc/apache2/sites-enabled/
       - ./certs:/certs
 
   basededatos:
@@ -39,7 +39,7 @@ services:
 
 secrets:
   mariadb:
-    file: .mariadb.txt
+    file: mariadb.txt
 
 networks:
   rede_test:

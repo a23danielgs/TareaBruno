@@ -38,4 +38,4 @@ WORKDIR /var/www/html
 EXPOSE 80 443
 
 # Iniciar Apache
-ENTRYPOINT ["tail", "-f", "/dev/null"]
+ENTRYPOINT ["apachectl", "-D", "FOREGROUND"]
