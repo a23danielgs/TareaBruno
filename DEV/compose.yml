@@ -1,0 +1,41 @@
+services:
+
+  web:
+    build: apache
+    hostname: web
+    ports:
+      - 8000:80
+      - 443:443
+    networks:
+      rede_test:
+        aliases:
+          - a23danielgs.ddnsfree.com
+          - www.a23danielgs.ddnsfree.com
+    volumes:
+      - ./app:/app
+      - ./apache/drupal.conf:/etc/apache2/sites-enabled/drupal.conf
+      - ./certs:/certs
+
+  basededatos:
+    image: mariadb
+    env_file:
+      - .env
+    volumes:
+      - datos:/var/lib/mysql
+    networks:
+      - rede_test
+
+  phpmyadmin:
+    image: phpmyadmin
+    networks:
+      - rede_test
+    restart: always
+    ports:
+      - 8080:80
+    environment:
+      - PMA_HOST=basededatos
+
+networks:
+  rede_test:
+volumes:
+  datos:
