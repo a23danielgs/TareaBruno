@@ -9,8 +9,8 @@ services:
     networks:
       rede_test:
         aliases:
-          - a23danielgs.ddnsfree.com
-          - www.a23danielgs.ddnsfree.com
+          - prestashop.a23danielgs.ddnsfree.com
+          - www.prestashop.a23danielgs.ddnsfree.com
     volumes:
       - ./app/:/app
       - ./configs/:/etc/apache2/sites-enabled/
