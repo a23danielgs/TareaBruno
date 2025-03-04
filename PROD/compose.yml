@@ -16,31 +16,6 @@ services:
       - ./configs/:/etc/apache2/sites-enabled/
       - ./certs:/certs
 
-  basededatos:
-    image: mariadb
-    volumes:
-      - datos:/var/lib/mysql
-    env_file:
-      - mariadb.env
-    secrets:
-      - mariadb
-    networks:
-      - rede_test
-
-  phpmyadmin:
-    image: phpmyadmin
-    networks:
-      - rede_test
-    restart: always
-    ports:
-      - 8080:80
-    environment:
-      - PMA_HOST=basededatos
-
-secrets:
-  mariadb:
-    file: mariadb.txt
-
 networks:
   rede_test:
 volumes:

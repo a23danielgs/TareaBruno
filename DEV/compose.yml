@@ -12,9 +12,20 @@ services:
           - a23danielgs.ddnsfree.com
           - www.a23danielgs.ddnsfree.com
     volumes:
-      - ./app:/app
-      - ./apache/drupal.conf:/etc/apache2/sites-enabled/drupal.conf
+      - ./app/:/app
+      - ./configs/:/etc/apache2/sites-enabled/
       - ./certs:/certs
+
+  basededatos:
+    image: mariadb
+    volumes:
+      - datos:/var/lib/mysql
+    env_file:
+      - mariadb.env
+    secrets:
+      - mariadb
+    networks:
+      - rede_test
 
   phpmyadmin:
     image: phpmyadmin
@@ -25,6 +36,10 @@ services:
       - 8080:80
     environment:
       - PMA_HOST=basededatos
+
+secrets:
+  mariadb:
+    file: mariadb.txt
 
 networks:
   rede_test:
